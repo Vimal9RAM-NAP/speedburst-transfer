@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPEEDBURST TRANSFER // Ephemeral Sharing</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              950: '#022c22'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-emerald-500 selection:text-slate-950 flex flex-col justify-between p-4 md:p-8 transition-colors duration-300">
+
+  <!-- TOP HEADER -->
+  <header class="max-w-5xl w-full mx-auto flex items-center justify-between py-4 border-b border-slate-800/80">
+    <div class="flex items-center gap-3">
+      <div class="relative flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+      </div>
+      <span class="font-mono text-xs font-bold tracking-widest text-slate-400 uppercase">SPEEDBURST CORE // 24H TTL</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="https://github.com" target="_blank" class="px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-xs font-bold tracking-wider transition-all">GITHUB</a>
+      <button id="themeToggleBtn" onclick="toggleDarkMode()" class="px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-xs font-bold tracking-wider transition-all">🌙</button>
+    </div>
+  </header>
+
+  <!-- HERO & DROPZONE -->
+  <main class="max-w-4xl w-full mx-auto my-auto py-8 space-y-8">
+    <div class="text-center space-y-3">
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight uppercase bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">
+        SPEEDBURST.TRANSFER
+      </h1>
+      <p class="font-mono text-xs md:text-sm text-emerald-400 tracking-[0.25em] uppercase font-semibold">
+        FAST LIKE A FLASH // SECURE EPHEMERAL SHARING
+      </p>
+    </div>
+
+    <div 
+      id="dropzone"
+      class="border-2 border-dashed border-slate-800 hover:border-emerald-500/80 rounded-3xl p-10 md:p-16 text-center cursor-pointer transition-all bg-slate-900/30 backdrop-blur-md relative group overflow-hidden shadow-2xl"
+      onclick="document.getElementById('fileInput').click()"
+      ondragover="handleDragOver(event)"
+      ondragleave="handleDragLeave(event)"
+      ondrop="handleDrop(event)"
+    >
+      <input type="file" id="fileInput" class="hidden" onchange="handleFileSelect(event)">
+      
+      <div id="dropzoneContent" class="space-y-4 relative z-10">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-2xl text-emerald-400 group-hover:scale-110 group-hover:border-emerald-500/50 transition-all shadow-inner">
+          ⚡
+        </div>
+        <div>
+          <p class="text-2xl md:text-3xl font-extrabold tracking-wide uppercase text-white">
+            DRAG AND DROP FILE
+          </p>
+          <p class="font-mono text-xs text-slate-400 mt-2">
+            Drop any file here to instantly provision QR, link, & credential access
+          </p>
+        </div>
+      </div>
+
+      <div id="uploadProgressState" class="hidden space-y-4 max-w-md mx-auto relative z-10">
+        <p class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-widest animate-pulse">UPLOADING STREAM...</p>
+        <p id="uploadFileName" class="text-lg font-bold truncate text-white"></p>
+        <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800">
+          <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-150"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION TRIGGER CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <button id="btnQr" onclick="openModal('qrModal')" disabled class="action-card">
+        <span class="text-xl">❖</span> FOR QR CODE
+      </button>
+      <button id="btnLink" onclick="openModal('linkModal')" disabled class="action-card">
+        <span class="text-xl">🔗</span> FOR DIRECT LINK
+      </button>
+      <button id="btnCreds" onclick="openModal('credsModal')" disabled class="action-card text-center">
+        <span class="text-xl">🛡️</span> USER & PASSWORD
+      </button>
+    </div>
+
+    <!-- RETRIEVAL CONSOLE -->
+    <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 backdrop-blur-sm space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-mono text-xs font-bold text-slate-400 uppercase tracking-widest">TEST RETRIEVAL CONSOLE</h3>
+        <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950/50 px-2.5 py-1 rounded-full border border-emerald-800/50">LIVE SIMULATOR</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <input type="text" id="loginUser" placeholder="Username (e.g. burst_1234)" class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 font-mono text-xs text-slate-200 outline-none focus:border-emerald-500 transition-colors">
+        <input type="password" id="loginPass" placeholder="6-Digit PIN" class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 font-mono text-xs text-slate-200 outline-none focus:border-emerald-500 transition-colors">
+        <button onclick="claimTransfer()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold font-mono text-xs uppercase px-4 py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/10">
+          CLAIM & DOWNLOAD ↗
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="max-w-5xl w-full mx-auto pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between font-mono text-xs text-slate-500 gap-2">
+    <span>SPEEDBURST SECURE PROTOCOL</span>
+    <span>ALL FILES PERMANENTLY PURGED AFTER 24 HOURS</span>
+  </footer>
+
+  <!-- MODAL: QR CODE -->
+  <div id="qrModal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <button onclick="closeModal('qrModal')" class="absolute top-6 left-6 text-xl font-bold text-slate-400 hover:text-white">✕</button>
+      <div id="qrContainer" class="w-56 h-56 mx-auto bg-white p-4 rounded-2xl shadow-xl flex items-center justify-center"></div>
+      <div class="flex items-center justify-center gap-4 pt-2">
+        <span class="font-mono text-xs text-slate-400 tracking-wider">SCAN OR SHARE</span>
+        <button onclick="shareData()" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all">SHARE ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LINK -->
+  <div id="linkModal" class="modal-backdrop hidden">
+    <div class="modal-box max-w-lg space-y-6">
+      <button onclick="closeModal('linkModal')" class="absolute top-6 left-6 text-xl font-bold text-slate-400 hover:text-white">✕</button>
+      <div class="pt-6">
+        <label class="block font-mono text-xs text-slate-400 uppercase mb-2">SECURE DOWNLOAD URL</label>
+        <input id="linkInput" type="text" readonly class="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl font-mono text-xs text-emerald-400 outline-none">
+      </div>
+      <div class="flex items-center justify-center gap-4">
+        <button onclick="copyField('linkInput')" class="flex-1 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold font-mono text-xs uppercase rounded-xl transition-all">COPY LINK</button>
+        <button onclick="shareData()" class="flex-1 py-3 border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-200 font-extrabold font-mono text-xs uppercase rounded-xl transition-all">SHARE ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CREDENTIALS -->
+  <div id="credsModal" class="modal-backdrop hidden">
+    <div class="modal-box max-w-lg space-y-6">
+      <button onclick="closeModal('credsModal')" class="absolute top-6 left-6 text-xl font-bold text-slate-400 hover:text-white">✕</button>
+      <div class="pt-6 space-y-4">
+        <div>
+          <label class="block font-mono text-xs text-slate-400 uppercase mb-2">USERNAME</label>
+          <input id="usernameInput" type="text" readonly class="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl font-mono text-xs text-emerald-400 outline-none">
+        </div>
+        <div>
+          <label class="block font-mono text-xs text-slate-400 uppercase mb-2">PASSWORD PIN</label>
+          <input id="passwordInput" type="text" readonly class="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl font-mono text-xs text-emerald-400 outline-none">
+        </div>
+      </div>
+      <div class="flex items-center justify-center gap-4">
+        <button onclick="copyCreds()" class="flex-1 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold font-mono text-xs uppercase rounded-xl transition-all">COPY CREDENTIALS</button>
+        <button onclick="shareCreds()" class="flex-1 py-3 border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-200 font-extrabold font-mono text-xs uppercase rounded-xl transition-all">SHARE ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

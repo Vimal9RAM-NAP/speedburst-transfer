@@ -1,0 +1,75 @@
+.action-card {
+  height: 6rem;
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-card:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.action-card:hover:not(:disabled) {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: #020617;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 50;
+}
+
+.modal-box {
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  max-width: 32rem;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Light Mode Support */
+html:not(.dark) body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+html:not(.dark) header, html:not(.dark) footer {
+  border-color: #e2e8f0;
+}
+html:not(.dark) .action-card {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+html:not(.dark) .modal-box {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+}
+html:not(.dark) input {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
