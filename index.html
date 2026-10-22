@@ -37,7 +37,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-emerald-500 selection:text-slate-950 flex flex-col justify-between p-4 md:p-8 transition-colors duration-300">
 
-  <!-- TOP HEADER -->
+
   <header class="max-w-5xl w-full mx-auto flex items-center justify-between py-4 border-b border-slate-800/80">
     <div class="flex items-center gap-3">
       <div class="relative flex h-3 w-3">
@@ -52,14 +52,14 @@
     </div>
   </header>
 
-  <!-- HERO & DROPZONE -->
+
   <main class="max-w-4xl w-full mx-auto my-auto py-8 space-y-8">
     <div class="text-center space-y-3">
       <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight uppercase bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">
         SPEEDBURST.TRANSFER
       </h1>
       <p class="font-mono text-xs md:text-sm text-emerald-400 tracking-[0.25em] uppercase font-semibold">
-        FAST LIKE A FLASH // SECURE EPHEMERAL SHARING
+        FAST LIKE A FLASH 
       </p>
     </div>
 
@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <!-- ACTION TRIGGER CARDS -->
+   
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <button id="btnQr" onclick="openModal('qrModal')" disabled class="action-card">
         <span class="text-xl">❖</span> FOR QR CODE
@@ -109,7 +109,7 @@
       </button>
     </div>
 
-    <!-- RETRIEVAL CONSOLE -->
+    
     <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 backdrop-blur-sm space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="font-mono text-xs font-bold text-slate-400 uppercase tracking-widest">TEST RETRIEVAL CONSOLE</h3>
@@ -125,13 +125,13 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
+ 
   <footer class="max-w-5xl w-full mx-auto pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between font-mono text-xs text-slate-500 gap-2">
     <span>SPEEDBURST SECURE PROTOCOL</span>
     <span>ALL FILES PERMANENTLY PURGED AFTER 24 HOURS</span>
   </footer>
 
-  <!-- MODAL: QR CODE -->
+ 
   <div id="qrModal" class="modal-backdrop hidden">
     <div class="modal-box">
       <button onclick="closeModal('qrModal')" class="absolute top-6 left-6 text-xl font-bold text-slate-400 hover:text-white">✕</button>
@@ -143,7 +143,7 @@
     </div>
   </div>
 
-  <!-- MODAL: LINK -->
+  
   <div id="linkModal" class="modal-backdrop hidden">
     <div class="modal-box max-w-lg space-y-6">
       <button onclick="closeModal('linkModal')" class="absolute top-6 left-6 text-xl font-bold text-slate-400 hover:text-white">✕</button>
@@ -158,7 +158,7 @@
     </div>
   </div>
 
-  <!-- MODAL: CREDENTIALS -->
+  
   <div id="credsModal" class="modal-backdrop hidden">
     <div class="modal-box max-w-lg space-y-6">
       <button onclick="closeModal('credsModal')" class="absolute top-6 left-6 text-xl font-bold text-slate-400 hover:text-white">✕</button>
