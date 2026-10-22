@@ -1,17 +1,5 @@
 let currentTransferData = null;
 
-function toggleDarkMode() {
-  const html = document.documentElement;
-  const btn = document.getElementById('themeToggleBtn');
-  if (html.classList.contains('dark')) {
-    html.classList.remove('dark');
-    btn.innerText = '☀️';
-  } else {
-    html.classList.add('dark');
-    btn.innerText = '🌙';
-  }
-}
-
 function handleDragOver(e) {
   e.preventDefault();
   e.currentTarget.classList.add('border-emerald-500', 'bg-emerald-950/10');
